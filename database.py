@@ -1,5 +1,4 @@
 from tkinter import *
-from PIL import ImageTk,Image
 
 root = Tk()
 
@@ -8,22 +7,22 @@ head_label = Label(root, text="Restaurant Management System",background="lightbl
 head_label.config(font=("Bold",32))
 head_label.grid(row=0,column=0,columnspan=6,padx=10,pady=10)
 
-main_frame_1 = LabelFrame(root, text="", padx=5,pady=10,borderwidth=10)
-main_frame_1.grid(row=1,column=0,columnspan=3,padx=(15,5),pady=10,sticky=W)
+main_frame_items = LabelFrame(root, text="", padx=5,pady=10,borderwidth=10)
+main_frame_items.grid(row=1,column=0,columnspan=3,padx=(15,5),pady=10,sticky=W)
 
-main_frame_2 = LabelFrame(root, text="", padx=5,pady=20,borderwidth=10)
-main_frame_2.grid(row=2,column=0,columnspan=3,padx=(15,5),pady=10,sticky=W)
+main_frame_price = LabelFrame(root, text="", padx=5,pady=20,borderwidth=10)
+main_frame_price.grid(row=2,column=0,columnspan=3,padx=(15,5),pady=10,sticky=W)
 
-main_frame_3 = LabelFrame(root, text="", padx=5,pady=10,borderwidth=10)
-main_frame_3.grid(row=1,rowspan=3,column=3,columnspan=6,padx=(0,5),pady=10,sticky=W+N)
+main_frame_bill = LabelFrame(root, text="", padx=5,pady=10,borderwidth=10)
+main_frame_bill.grid(row=1,rowspan=3,column=3,columnspan=6,padx=(0,5),pady=10,sticky=W+N)
 
-main_frame_4 = LabelFrame(root, text="", padx=5,pady=10,borderwidth=10)
-main_frame_4.grid(row=1,rowspan=3,column=5,columnspan=7,padx=(5,12),pady=10,sticky=W+N)
+main_frame_option = LabelFrame(root, text="", padx=5,pady=10,borderwidth=10)
+main_frame_option.grid(row=1,rowspan=3,column=5,columnspan=7,padx=(5,12),pady=10,sticky=W+N)
 
-drinks_frame = LabelFrame(main_frame_1, text="Drinks",borderwidth=5,padx=30,pady=30)
+drinks_frame = LabelFrame(main_frame_items, text="Drinks",borderwidth=5,padx=30,pady=30)
 drinks_frame.grid(row=0,column=0,columnspan=2,padx=5,pady=10)
 
-food_frame = LabelFrame(main_frame_1, text="Food",borderwidth=5,padx=30,pady=30)
+food_frame = LabelFrame(main_frame_items, text="Food",borderwidth=5,padx=30,pady=30)
 food_frame.grid(row=0,column=2,columnspan=4,padx=(15,5),pady=5)
 
 
@@ -84,26 +83,26 @@ food_input_4.grid(row=3,column=1,sticky=E)
 food_input_5.grid(row=4,column=1,sticky=E)
 
 #COST display
-cost_drink = Label(main_frame_2,text="COST of Drinks",width=15,pady=5,background="lightblue").grid(row=0,column=0,padx=5)
-cost_food = Label(main_frame_2,text="COST of Food",width=15,pady=5,background="lightblue").grid(row=1,column=0,padx=5)
-service_charge = Label(main_frame_2,text="Service Charge",width=15,pady=5,background="lightblue").grid(row=2,column=0,padx=5)
+cost_drink = Label(main_frame_price,text="COST of Drinks",width=15,pady=5,background="lightblue").grid(row=0,column=0,padx=5)
+cost_food = Label(main_frame_price,text="COST of Food",width=15,pady=5,background="lightblue").grid(row=1,column=0,padx=5)
+service_charge = Label(main_frame_price,text="Service Charge",width=15,pady=5,background="lightblue").grid(row=2,column=0,padx=5)
 
-cost_drink_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=0,column=1,padx=5,pady=5)
-cost_food_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=1,column=1,padx=5,pady=5)
-service_charge_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=2,column=1,padx=5,pady=5)
+cost_drink_input = Entry(main_frame_price,borderwidth=3,width=15).grid(row=0,column=1,padx=5,pady=5)
+cost_food_input = Entry(main_frame_price,borderwidth=3,width=15).grid(row=1,column=1,padx=5,pady=5)
+service_charge_input = Entry(main_frame_price,borderwidth=3,width=15).grid(row=2,column=1,padx=5,pady=5)
 
 
-paid_tax = Label(main_frame_2,text="Paid Tax",width=15,pady=5,background="lightblue").grid(row=0,column=2,padx=(20,5))
-sub_total = Label(main_frame_2,text="Sub Total",width=15,pady=5,background="lightblue").grid(row=1,column=2,padx=(20,5))
-total_cost = Label(main_frame_2,text="Total Cost",width=15,pady=5,background="lightblue").grid(row=2,column=2,padx=(20,5))
+paid_tax = Label(main_frame_price,text="Paid Tax",width=15,pady=5,background="lightblue").grid(row=0,column=2,padx=(20,5))
+sub_total = Label(main_frame_price,text="Sub Total",width=15,pady=5,background="lightblue").grid(row=1,column=2,padx=(20,5))
+total_cost = Label(main_frame_price,text="Total Cost",width=15,pady=5,background="lightblue").grid(row=2,column=2,padx=(20,5))
 
-paid_tax_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=0,column=3,padx=5,pady=5)
-sub_total_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=1,column=3,padx=5,pady=5)
-total_cost_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=2,column=3,padx=5,pady=5)
+paid_tax_input = Entry(main_frame_price,borderwidth=3,width=15).grid(row=0,column=3,padx=5,pady=5)
+sub_total_input = Entry(main_frame_price,borderwidth=3,width=15).grid(row=1,column=3,padx=5,pady=5)
+total_cost_input = Entry(main_frame_price,borderwidth=3,width=15).grid(row=2,column=3,padx=5,pady=5)
 
 
 #CALCUATOR
-cal_input = Entry(main_frame_3,width=50,borderwidth=5)
+cal_input = Entry(main_frame_bill,width=50,borderwidth=5)
 cal_input.grid(row=0,column=0,columnspan=5,pady=(0,10),sticky=W)
 
 
@@ -165,28 +164,28 @@ def button_clear():
     cal_input.delete(0, END)
 
 
-input_1 = Button(main_frame_3,text="1",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(1)).grid(row=3,column=2)
-input_2 = Button(main_frame_3,text="2",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(2)).grid(row=3,column=1)
-input_3 = Button(main_frame_3,text="3",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(3)).grid(row=3,column=0)
-input_4 = Button(main_frame_3,text="4",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(4)).grid(row=2,column=2)
-input_5 = Button(main_frame_3,text="5",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(5)).grid(row=2,column=1)
-input_6 = Button(main_frame_3,text="6",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(6)).grid(row=2,column=0)
-input_7 = Button(main_frame_3,text="7",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(7)).grid(row=1,column=2)
-input_8 = Button(main_frame_3,text="8",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(8)).grid(row=1,column=1)
-input_9 = Button(main_frame_3,text="9",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(9)).grid(row=1,column=0)
-input_0 = Button(main_frame_3,text="0",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(0)).grid(row=4,column=0)
+input_1 = Button(main_frame_bill,text="1",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(1)).grid(row=3,column=2)
+input_2 = Button(main_frame_bill,text="2",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(2)).grid(row=3,column=1)
+input_3 = Button(main_frame_bill,text="3",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(3)).grid(row=3,column=0)
+input_4 = Button(main_frame_bill,text="4",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(4)).grid(row=2,column=2)
+input_5 = Button(main_frame_bill,text="5",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(5)).grid(row=2,column=1)
+input_6 = Button(main_frame_bill,text="6",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(6)).grid(row=2,column=0)
+input_7 = Button(main_frame_bill,text="7",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(7)).grid(row=1,column=2)
+input_8 = Button(main_frame_bill,text="8",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(8)).grid(row=1,column=1)
+input_9 = Button(main_frame_bill,text="9",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(9)).grid(row=1,column=0)
+input_0 = Button(main_frame_bill,text="0",padx=30,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=lambda: cal(0)).grid(row=4,column=0)
 
-input_add = Button(main_frame_3,text="+",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_add).grid(row=1,column=4)
-input_sub = Button(main_frame_3,text="-",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_sub).grid(row=2,column=4)
-input_mul = Button(main_frame_3,text="*",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_mul).grid(row=3,column=4)
-input_div = Button(main_frame_3,text="/",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_div).grid(row=4,column=4)
+input_add = Button(main_frame_bill,text="+",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_add).grid(row=1,column=4)
+input_sub = Button(main_frame_bill,text="-",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_sub).grid(row=2,column=4)
+input_mul = Button(main_frame_bill,text="*",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_mul).grid(row=3,column=4)
+input_div = Button(main_frame_bill,text="/",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command= button_div).grid(row=4,column=4)
 
-input_eq = Button(main_frame_3,text="=",padx=29,pady=9,fg="black",background="lightblue",borderwidth=2,relief=RAISED,command= button_equal).grid(row=4,column=2)
-input_clear = Button(main_frame_3,text="C",padx=29,pady=9,fg="black",background="violet",borderwidth=2,relief=RAISED,command= button_clear).grid(row=4,column=1)
+input_eq = Button(main_frame_bill,text="=",padx=29,pady=9,fg="black",background="lightblue",borderwidth=2,relief=RAISED,command= button_equal).grid(row=4,column=2)
+input_clear = Button(main_frame_bill,text="C",padx=29,pady=9,fg="black",background="violet",borderwidth=2,relief=RAISED,command= button_clear).grid(row=4,column=1)
 
 
 #BILL generator
-bill_generator = Label(main_frame_3,text="Bill no. xxx    yyyy-mm-dd\n" + "========================\nItem(s)\t\tAmount\n========================",width=30,borderwidth=5,relief=RAISED)
+bill_generator = Label(main_frame_bill,text="Bill no. xxx    yyyy-mm-dd\n" + "========================\nItem(s)\t\tAmount\n========================",width=30,borderwidth=5,relief=RAISED)
 bill_generator.config(font=("Courier",13))
 bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
 
@@ -195,15 +194,13 @@ bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
 
 
 #BUTTONS
-total_button = Button(main_frame_4,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
-save_button = Button(main_frame_4,text="Save",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=1,column=0,columnspan=2,padx=10,pady=10)
-send_button = Button(main_frame_4,text="Send",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=2,column=0,columnspan=2,padx=10,pady=10)
-exit_button = Button(main_frame_4,text="Exit",padx=33,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=3,column=0,columnspan=2,padx=10,pady=10)
-update_button = Button(main_frame_4,text="Update",padx=23,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=4,column=0,columnspan=2,padx=10,pady=10)
-reset_button = Button(main_frame_4,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=5,column=0,columnspan=2,padx=10,pady=10)
+total_button = Button(main_frame_option,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
+save_button = Button(main_frame_option,text="Save",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=1,column=0,columnspan=2,padx=10,pady=10)
+send_button = Button(main_frame_option,text="Send",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=2,column=0,columnspan=2,padx=10,pady=10)
+exit_button = Button(main_frame_option,text="Exit",padx=33,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=root.quit).grid(row=3,column=0,columnspan=2,padx=10,pady=10)
+update_button = Button(main_frame_option,text="Update",padx=23,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=4,column=0,columnspan=2,padx=10,pady=10)
+reset_button = Button(main_frame_option,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=5,column=0,columnspan=2,padx=10,pady=10)
 
-
-#day 2 end
 
 
 root.mainloop()
