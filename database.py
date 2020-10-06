@@ -1,5 +1,6 @@
 from tkinter import *
-from PIL import ImageTk,Image
+import datetime
+import time
 
 root = Tk()
 
@@ -26,10 +27,21 @@ drinks_frame.grid(row=0,column=0,columnspan=2,padx=5,pady=10)
 food_frame = LabelFrame(main_frame_1, text="Food",borderwidth=5,padx=30,pady=30)
 food_frame.grid(row=0,column=2,columnspan=4,padx=(15,5),pady=5)
 
+drink_dict = {
+        1: ["Lassi",20],
+        2: ["Coffee",15],
+        3: ["Tea",10],
+        4: ["Juice",30],
+        5: ["Shakes",50]
+}
 
-#drink_list = ["Lassi","Coffee","Tea","Juice","Shakes","Milk","Shikanji","Redbull"]
-
-#day 2 start
+food_dict = {
+        1: ["Roti",10],
+        2: ["Dal Makhni",60],
+        3: ["Mutter Paneer",80],
+        4: ["Paratha",12],
+        5: ["Mix Veg",50]
+}
 
 #DRINKS check box
 drink_check_1 = Label(drinks_frame,text="Lassi",width=10,bg="lightblue")
@@ -88,18 +100,25 @@ cost_drink = Label(main_frame_2,text="COST of Drinks",width=15,pady=5,background
 cost_food = Label(main_frame_2,text="COST of Food",width=15,pady=5,background="lightblue").grid(row=1,column=0,padx=5)
 service_charge = Label(main_frame_2,text="Service Charge",width=15,pady=5,background="lightblue").grid(row=2,column=0,padx=5)
 
-cost_drink_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=0,column=1,padx=5,pady=5)
-cost_food_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=1,column=1,padx=5,pady=5)
-service_charge_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=2,column=1,padx=5,pady=5)
+cost_drink_input = Entry(main_frame_2,borderwidth=3,width=15)
+cost_food_input = Entry(main_frame_2,borderwidth=3,width=15)
+service_charge_input = Entry(main_frame_2,borderwidth=3,width=15)
 
+cost_drink_input.grid(row=0,column=1,padx=5,pady=5)
+cost_food_input.grid(row=1,column=1,padx=5,pady=5)
+service_charge_input.grid(row=2,column=1,padx=5,pady=5)
 
 paid_tax = Label(main_frame_2,text="Paid Tax",width=15,pady=5,background="lightblue").grid(row=0,column=2,padx=(20,5))
 sub_total = Label(main_frame_2,text="Sub Total",width=15,pady=5,background="lightblue").grid(row=1,column=2,padx=(20,5))
 total_cost = Label(main_frame_2,text="Total Cost",width=15,pady=5,background="lightblue").grid(row=2,column=2,padx=(20,5))
 
-paid_tax_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=0,column=3,padx=5,pady=5)
-sub_total_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=1,column=3,padx=5,pady=5)
-total_cost_input = Entry(main_frame_2,borderwidth=3,width=15).grid(row=2,column=3,padx=5,pady=5)
+paid_tax_input = Entry(main_frame_2,borderwidth=3,width=15)
+sub_total_input = Entry(main_frame_2,borderwidth=3,width=15)
+total_cost_input = Entry(main_frame_2,borderwidth=3,width=15)
+
+paid_tax_input.grid(row=0,column=3,padx=5,pady=5)
+sub_total_input.grid(row=1,column=3,padx=5,pady=5)
+total_cost_input.grid(row=2,column=3,padx=5,pady=5)
 
 
 #CALCUATOR
@@ -186,24 +205,149 @@ input_clear = Button(main_frame_3,text="C",padx=29,pady=9,fg="black",background=
 
 
 #BILL generator
-bill_generator = Label(main_frame_3,text="Bill no. xxx    yyyy-mm-dd\n" + "========================\nItem(s)\t\tAmount\n========================",width=30,borderwidth=5,relief=RAISED)
+bill_generator = Text(main_frame_3,height=15,width=30,borderwidth=5,relief=RAISED)
 bill_generator.config(font=("Courier",13))
 bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
 
 
 
+def total():
+    cost_drink_input.delete(0, END)
+    cost_food_input.delete(0, END)
+    service_charge_input.delete(0, END)
+    paid_tax_input.delete(0, END)
+    sub_total_input.delete(0, END)
+    total_cost_input.delete(0, END)
+
+    global drink_amount
+    global food_amount
+    global bill_generator
+    global sub_total
+    global total_cost
+    global drink_final_ar
+    global food_final_ar
+    global date1
+    global time1
+
+    drink_amount = 0
+    food_amount = 0  
+
+    drink_a = drinks_input_1.get()
+    drink_b = drinks_input_2.get()
+    drink_c = drinks_input_3.get()
+    drink_d = drinks_input_4.get()
+    drink_e = drinks_input_5.get()
+
+    #All drink items
+    drink_ar = [drink_a, drink_b, drink_c, drink_d, drink_e]
+
+    for i in range(len(drink_ar)):
+        if drink_ar[i] == '':
+            drink_ar[i] = 0 
+        else:
+            drink_ar[i] = int(drink_ar[i])
+        #Cost of drink items
+        drink_amount += (drink_dict[i+1][1] * drink_ar[i])
+
+    
+    food_a = food_input_1.get()
+    food_b = food_input_2.get()
+    food_c = food_input_3.get()
+    food_d = food_input_4.get()
+    food_e = food_input_5.get()
+
+    #All food items
+    food_ar = [food_a, food_b, food_c, food_d, food_e]
+
+    for i in range(len(food_ar)):
+        if food_ar[i] == '':
+            food_ar[i] = 0 
+        else:
+            food_ar[i] = int(food_ar[i])
+        #Cost of food items
+        food_amount += (food_dict[i+1][1] * food_ar[i])
+
+    sc = (food_amount + drink_amount) * (5/100)
+    sc = round(sc, 2)
+
+    paid_tax = float((food_amount + drink_amount) * (6/100))
+    paid_tax = round(paid_tax, 2)
+
+    sub_total = sc + paid_tax
+    sub_total = round(sub_total, 2)
+
+    total_cost = drink_amount + food_amount + sc + paid_tax
+    total_cost = round(total_cost, 2)
+
+    date = datetime.date.today()
+    date1 = str(date)
+    #print(date1)
+    t = time.localtime()
+    #print(t)
+    time1 = str(t[3])+':'+str(t[4])+':'+str(t[5])
+
+    drink_final_ar = []
+    food_final_ar = [] 
+    drink_cost = []
+    food_cost = []
+    drink = ''
+    food = ''
+
+    #for drinks
+    #All Selected Drink items
+    for i in range(len(drink_ar)):
+        if drink_ar[i] > 0:
+            drink_final_ar.append(drink_dict[i+1][0])
+    #print(drink_final_ar)
+    
+    #All Selected Drink items COST
+    for i in range(len(drink_ar)):
+        if drink_ar[i] > 0:
+            drink_cost.append(drink_dict[i+1][1] * drink_ar[i])
+    
+    #Final DRINK Array
+    for i in range(len(drink_cost)):
+        drink += '\n   {}\t\t    {}'.format(drink_final_ar[i], drink_cost[i])
+    
+   
+    #for food
+    #All Selected Food items
+    for i in range(len(food_ar)):
+        if food_ar[i] > 0:
+            food_final_ar.append(food_dict[i+1][0])
+    
+    #All Selected Food item COST
+    for i in range(len(food_ar)):
+        if food_ar[i] > 0:
+            food_cost.append(food_dict[i+1][1] * food_ar[i])
+    
+    #Final FOOD Array
+    for i in range(len(food_cost)):
+        food += '\n   {}\t\t    {}'.format(food_final_ar[i], food_cost[i])
+    
+
+    bill_generator = Text(main_frame_3,height=15,width=30,borderwidth=5,relief=RAISED)
+    bill_generator.config(font=("Courier",13))
+    bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
+    bill_generator.insert(1.0,"Bill no:xxx   Date:" + str(date) +"\n\t      time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost) )
+
+
+    cost_drink_input.insert(0, drink_amount)
+    cost_food_input.insert(0, food_amount)
+    service_charge_input.insert(0, sc)
+    paid_tax_input.insert(0 , paid_tax)
+    sub_total_input.insert(0, sub_total)
+    total_cost_input.insert(0, total_cost)
+
 
 
 #BUTTONS
-total_button = Button(main_frame_4,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
+total_button = Button(main_frame_4,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=total).grid(row=0,column=0,columnspan=2,padx=10,pady=10)
 save_button = Button(main_frame_4,text="Save",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=1,column=0,columnspan=2,padx=10,pady=10)
 send_button = Button(main_frame_4,text="Send",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=2,column=0,columnspan=2,padx=10,pady=10)
 exit_button = Button(main_frame_4,text="Exit",padx=33,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=3,column=0,columnspan=2,padx=10,pady=10)
 update_button = Button(main_frame_4,text="Update",padx=23,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=4,column=0,columnspan=2,padx=10,pady=10)
 reset_button = Button(main_frame_4,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED).grid(row=5,column=0,columnspan=2,padx=10,pady=10)
-
-
-#day 2 end
 
 
 root.mainloop()
