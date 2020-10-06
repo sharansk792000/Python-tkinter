@@ -26,10 +26,6 @@ food_frame = LabelFrame(main_frame_items, text="Food",borderwidth=5,padx=30,pady
 food_frame.grid(row=0,column=2,columnspan=4,padx=(15,5),pady=5)
 
 
-#drink_list = ["Lassi","Coffee","Tea","Juice","Shakes","Milk","Shikanji","Redbull"]
-
-#day 2 start
-
 #DRINKS check box
 drink_check_1 = Label(drinks_frame,text="Lassi",width=10,bg="lightblue")
 drink_check_2 = Label(drinks_frame,text="Coffee",width=10,bg="lightblue")
