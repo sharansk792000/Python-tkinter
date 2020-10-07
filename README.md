@@ -8,12 +8,25 @@
 3. Send the bill to the customer.
 4. Update the items available in the restaurant.
 
+#
 ## Current status :
 Calculates the total amount of the items ordered and generates a bill.
 
+Send the bill to the customer. ( to make this work follow the steps given below in the Instructions )
+
+#
 ## Yet to be done :
 Save the bill in a database.
 
-Send the bill to the customer.
-
 Update the items available in the restaurant.
+
+#
+## Instructions to send the bill using Mail :
+
+### Step 1:
+Login to your mail
+
+### Step 2:
+Open a new tab and search "Less secure apps" and ENABLE it.
+
+Now you are good to go...!
