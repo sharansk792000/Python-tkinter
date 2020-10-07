@@ -475,10 +475,10 @@ def send():
         food += f'\n   {food_final_ar[i]}\t\t    {food_cost[i]}'
 
     #Generates bill in the Textbox
-    bill_generator = Text(send_frame,height=15,width=30,borderwidth=5,relief=RAISED)
-    bill_generator.config(font=("Courier",13))
-    bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
-    bill_generator.insert(1.0,"Bill no:xxx   Date:" + str(date) +"\n\t      time: " + str(t[3])+':'+str(t[4])+':'+str(t[5]) +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost) )
+    bill_generator_2 = Text(send_frame,height=15,width=30,borderwidth=5,relief=RAISED)
+    bill_generator_2.config(font=("Courier",13))
+    bill_generator_2.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
+    bill_generator_2.insert(1.0,"Bill no:xxx   Date:" + str(date) +"\n\t      time: " + str(t[3])+':'+str(t[4])+':'+str(t[5]) +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost) )
 
     #Button to send an e-mail to the customer
     send_button_2 = Button(new,text="Send Bill",background="lightblue",fg="black",width=18,padx=5,pady=5, command=mail)
@@ -489,6 +489,29 @@ def send():
     new.mainloop()
 
 
+def reset():
+    cost_drink_input.delete(0, END)
+    cost_food_input.delete(0, END)
+    service_charge_input.delete(0, END)
+    paid_tax_input.delete(0, END)
+    sub_total_input.delete(0, END)
+    total_cost_input.delete(0, END)
+
+    drinks_input_1.delete(0, END)
+    drinks_input_2.delete(0, END)
+    drinks_input_3.delete(0, END)
+    drinks_input_4.delete(0, END)
+    drinks_input_5.delete(0, END)
+
+    food_input_1.delete(0, END)
+    food_input_2.delete(0, END)
+    food_input_3.delete(0, END)
+    food_input_4.delete(0, END)
+    food_input_5.delete(0, END)
+
+    bill_generator.delete(1.0, END)
+
+
 
 #BUTTONS
 total_button = Button(main_frame_option,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=total)
@@ -496,7 +519,7 @@ save_button = Button(main_frame_option,text="Save",padx=32,pady=9,fg="white",bac
 send_button = Button(main_frame_option,text="Send",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=send)
 exit_button = Button(main_frame_option,text="Exit",padx=33,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
 update_button = Button(main_frame_option,text="Update",padx=23,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
-reset_button = Button(main_frame_option,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
+reset_button = Button(main_frame_option,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=reset)
 
 
 total_button.grid(row=0,column=0,columnspan=2,padx=10,pady=10)
