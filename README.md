@@ -28,6 +28,7 @@ Login to your mail
 
 ### Step 2:
 Open a new tab and search "Less secure apps" 
+
 Click on the first link and ENABLE "Less secure apps".
 
 Now you are good to go...!👍
