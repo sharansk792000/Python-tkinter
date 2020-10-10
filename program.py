@@ -242,15 +242,8 @@ def total():
     sub_total_input.delete(0, END)
     total_cost_input.delete(0, END)
 
-    global drink_amount
-    global food_amount
     global bill_generator
-    global sub_total
-    global total_cost
-    global drink_final_ar
-    global food_final_ar
-    global date1
-    global time1
+    global bill_str
 
     drink_amount = 0
     food_amount = 0  
@@ -346,11 +339,12 @@ def total():
     for i in range(len(food_cost)):
         food += '\n   {}\t\t    {}'.format(food_final_ar[i], food_cost[i])
     
+    bill_str = "Bill no:xxx   Date:" + str(date) +"\n\t      time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost)
 
     bill_generator = Text(main_frame_bill,height=15,width=30,borderwidth=5,relief=RAISED)
     bill_generator.config(font=("Courier",13))
     bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
-    bill_generator.insert(1.0,"Bill no:xxx   Date:" + str(date) +"\n\t      time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost) )
+    bill_generator.insert(1.0, bill_str)
 
 
     cost_drink_input.insert(0, drink_amount)
@@ -387,6 +381,8 @@ def mail():
 def send():
     new = Tk()
 
+    bill = bill_str
+
     global bill_generator
     global mail_input
 
@@ -408,77 +404,12 @@ def send():
     bill_label.config(font=("Bold",16))
     bill_label.grid(row=3,column=0,columnspan=5,padx=20,pady=(30,15))
 
-    drink_a = drinks_input_1.get()
-    drink_b = drinks_input_2.get()
-    drink_c = drinks_input_3.get()
-    drink_d = drinks_input_4.get()
-    drink_e = drinks_input_5.get()
-
-    drink_ar = [drink_a, drink_b, drink_c, drink_d, drink_e]
-
-    for i in range(len(drink_ar)):
-        if drink_ar[i] == '':
-            drink_ar[i] = 0 
-        else:
-            drink_ar[i] = int(drink_ar[i])
-
-    
-    food_a = food_input_1.get()
-    food_b = food_input_2.get()
-    food_c = food_input_3.get()
-    food_d = food_input_4.get()
-    food_e = food_input_5.get()
-
-    food_ar = [food_a, food_b, food_c, food_d, food_e]
-
-    for i in range(len(food_ar)):
-        if food_ar[i] == '':
-            food_ar[i] = 0 
-        else:
-            food_ar[i] = int(food_ar[i])
-
-    date = datetime.date.today()
-    t = time.localtime()
-
-    drink_final_ar = []
-    food_final_ar = []
-    drink_cost = []
-    food_cost = []
-    drink = ''
-    food = ''
-
-    #For Drinks
-    for i in range(len(drink_ar)):
-        if drink_ar[i] > 0:
-            drink_final_ar.append(drink_dict[i+1][0])
-    
-    for i in range(len(drink_ar)):
-        if drink_ar[i] > 0:
-            drink_cost.append(drink_dict[i+1][1] * drink_ar[i])
-
-    for i in range(len(drink_cost)):
-        drink += f'\n   {drink_final_ar[i]}\t\t    {drink_cost[i]}'
-    
-   
-    #For Food
-    for i in range(len(food_ar)):
-        if food_ar[i] > 0:
-            food_final_ar.append(food_dict[i+1][0])
-    
-    
-    for i in range(len(food_ar)):
-        if food_ar[i] > 0:
-            food_cost.append(food_dict[i+1][1] * food_ar[i])
-    
-
-    for i in range(len(food_cost)):
-        food += f'\n   {food_final_ar[i]}\t\t    {food_cost[i]}'
 
     #Generates bill in the Textbox
     bill_generator_2 = Text(send_frame,height=15,width=30,borderwidth=5,relief=RAISED)
     bill_generator_2.config(font=("Courier",13))
     bill_generator_2.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(15,10))
-    bill_generator_2.insert(1.0,"Bill no:xxx   Date:" + str(date) +"\n\t      time: " + str(t[3])+':'+str(t[4])+':'+str(t[5]) +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost) )
+    bill_generator_2.insert(1.0, bill)
 
     #Button to send an e-mail to the customer
     send_button_2 = Button(new,text="Send Bill",background="lightblue",fg="black",width=18,padx=5,pady=5, command=mail)
@@ -487,6 +418,7 @@ def send():
     new.quit()
  
     new.mainloop()
+
 
 
 def reset():
