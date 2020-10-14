@@ -449,7 +449,7 @@ def reset():
 total_button = Button(main_frame_option,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=total)
 save_button = Button(main_frame_option,text="Save",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
 send_button = Button(main_frame_option,text="Send",padx=31,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=send)
-exit_button = Button(main_frame_option,text="Exit",padx=33,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
+exit_button = Button(main_frame_option,text="Exit",padx=33,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=exit)
 update_button = Button(main_frame_option,text="Update",padx=23,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
 reset_button = Button(main_frame_option,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED, command=reset)
 
