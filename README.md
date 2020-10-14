@@ -31,4 +31,7 @@ Open a new tab and search "Less secure apps"
 
 Click on the first link and ENABLE "Less secure apps".
 
+## Step 3:
+In the code go to ```mail()``` function and enter your email ID and Password.
+
 Now you are good to go...!👍
