@@ -15,13 +15,13 @@ head_label.grid(row=0,column=0,columnspan=6,padx=22,pady=10)
 main_frame_items = LabelFrame(root, text="", padx=40,pady=25,borderwidth=10)
 main_frame_items.grid(row=1,column=0,columnspan=3,padx=(70,5),pady=(30,10),sticky=W)
 
-main_frame_price = LabelFrame(root, text="", padx=20,pady=20,borderwidth=10)
+main_frame_price = LabelFrame(root, text="", padx=30,pady=20,borderwidth=10)
 main_frame_price.grid(row=2,column=0,columnspan=3,padx=(70,5),pady=30,sticky=W)
 
-main_frame_bill = LabelFrame(root, text="", padx=20,pady=10,borderwidth=10)
+main_frame_bill = LabelFrame(root, text="", padx=40,pady=10,borderwidth=10)
 main_frame_bill.grid(row=1,rowspan=3,column=3,columnspan=6,padx=(20,20),pady=30,sticky=W+N)
 
-main_frame_option = LabelFrame(root, text="", padx=20,pady=33,borderwidth=10)
+main_frame_option = LabelFrame(root, text="", padx=30,pady=33,borderwidth=10)
 main_frame_option.grid(row=1,rowspan=3,column=5,columnspan=7,padx=0,pady=30,sticky=W+N)
 
 drinks_frame = LabelFrame(main_frame_items, text="Drinks",borderwidth=5,padx=30,pady=30)
@@ -49,11 +49,11 @@ food_dict = {
 
 
 #DRINKS check box
-drink_check_1 = Label(drinks_frame,text="Lassi", pady=5,width=10,bg="lightblue")
-drink_check_2 = Label(drinks_frame,text="Coffee", pady=5,width=10,bg="lightblue")
-drink_check_3 = Label(drinks_frame,text="Tea", pady=5,width=10,bg="lightblue")
-drink_check_4 = Label(drinks_frame,text="Juice", pady=5,width=10,bg="lightblue")
-drink_check_5 = Label(drinks_frame,text="Shakes", pady=5,width=10,bg="lightblue")
+drink_check_1 = Label(drinks_frame,text="Lassi", pady=5,width=15,bg="lightblue")
+drink_check_2 = Label(drinks_frame,text="Coffee", pady=5,width=15,bg="lightblue")
+drink_check_3 = Label(drinks_frame,text="Tea", pady=5,width=15,bg="lightblue")
+drink_check_4 = Label(drinks_frame,text="Juice", pady=5,width=15,bg="lightblue")
+drink_check_5 = Label(drinks_frame,text="Shakes", pady=5,width=15,bg="lightblue")
 
 drink_check_1.config(font=("Bold",15))
 drink_check_2.config(font=("Bold",15))
@@ -88,11 +88,11 @@ drinks_input_5.grid(row=4,column=1,sticky=E)
 
 
 #FOOD label
-food_check_1 = Label(food_frame,text="Roti", pady=5,width=10,bg="lightblue")
-food_check_2 = Label(food_frame,text="Dal Makhni", pady=5,width=10,bg="lightblue")
-food_check_3 = Label(food_frame,text="Mutter Paneer", pady=5,width=10,bg="lightblue")
-food_check_4 = Label(food_frame,text="Paratha", pady=5,width=10,bg="lightblue")
-food_check_5 = Label(food_frame,text="Mix Veg", pady=5,width=10,bg="lightblue")
+food_check_1 = Label(food_frame,text="Roti", pady=5,width=15,bg="lightblue")
+food_check_2 = Label(food_frame,text="Dal Makhni", pady=5,width=15,bg="lightblue")
+food_check_3 = Label(food_frame,text="Mutter Paneer", pady=5,width=15,bg="lightblue")
+food_check_4 = Label(food_frame,text="Paratha", pady=5,width=15,bg="lightblue")
+food_check_5 = Label(food_frame,text="Mix Veg", pady=5,width=15,bg="lightblue")
 
 food_check_1.config(font=("Bold",15))
 food_check_2.config(font=("Bold",15))
@@ -142,20 +142,20 @@ paid_tax.config(font=("Bold", 15))
 sub_total.config(font=("Bold", 15))
 total_cost.config(font=("Bold", 15))
 
-cost_drink.grid(row=0,column=0,padx=(0,20),pady=15)
-cost_food.grid(row=1,column=0,padx=(0,20),pady=15)
-service_charge.grid(row=2,column=0,padx=(0,20),pady=15)
-paid_tax.grid(row=0,column=2,padx=(73,20))
-sub_total.grid(row=1,column=2,padx=(73,20))
-total_cost.grid(row=2,column=2,padx=(73,20))
+cost_drink.grid(row=0,column=0,padx=20,pady=15)
+cost_food.grid(row=1,column=0,padx=20,pady=15)
+service_charge.grid(row=2,column=0,padx=20,pady=15)
+paid_tax.grid(row=0,column=2,padx=(95,20))
+sub_total.grid(row=1,column=2,padx=(95,20))
+total_cost.grid(row=2,column=2,padx=(95,20))
 
 #COST Input
-cost_drink_input = Entry(main_frame_price,borderwidth=3,width=10)
-cost_food_input = Entry(main_frame_price,borderwidth=3,width=10)
-service_charge_input = Entry(main_frame_price,borderwidth=3,width=10)
-paid_tax_input = Entry(main_frame_price,borderwidth=3,width=10)
-sub_total_input = Entry(main_frame_price,borderwidth=3,width=10)
-total_cost_input = Entry(main_frame_price,borderwidth=3,width=10)
+cost_drink_input = Entry(main_frame_price,borderwidth=3,width=12)
+cost_food_input = Entry(main_frame_price,borderwidth=3,width=12)
+service_charge_input = Entry(main_frame_price,borderwidth=3,width=12)
+paid_tax_input = Entry(main_frame_price,borderwidth=3,width=12)
+sub_total_input = Entry(main_frame_price,borderwidth=3,width=12)
+total_cost_input = Entry(main_frame_price,borderwidth=3,width=12)
 
 cost_drink_input.config(font=8)
 cost_food_input.config(font=8)
@@ -167,15 +167,15 @@ total_cost_input.config(font=8)
 cost_drink_input.grid(row=0,column=1,padx=(10,5),pady=5)
 cost_food_input.grid(row=1,column=1,padx=5,pady=5)
 service_charge_input.grid(row=2,column=1,padx=5,pady=5)
-paid_tax_input.grid(row=0,column=3,padx=5,pady=5)
-sub_total_input.grid(row=1,column=3,padx=5,pady=5)
-total_cost_input.grid(row=2,column=3,padx=5,pady=5)
+paid_tax_input.grid(row=0,column=3,padx=(5,20),pady=5)
+sub_total_input.grid(row=1,column=3,padx=(5,20),pady=5)
+total_cost_input.grid(row=2,column=3,padx=(5,20),pady=5)
 
 
 #CALCUATOR
-cal_input = Entry(main_frame_bill,width=35,borderwidth=5)
+cal_input = Entry(main_frame_bill,width=38,borderwidth=5)
 cal_input.config(font=1)
-cal_input.grid(row=0,column=0,columnspan=5,pady=(10,20),sticky=W)
+cal_input.grid(row=0,column=0,columnspan=5,padx=20,pady=(10,20),sticky=W)
 
 
 #CALCULATOR function
@@ -296,11 +296,14 @@ input_div.grid(row=4,column=4, pady=1)
 input_equal.grid(row=4,column=2, pady=1)
 input_clear.grid(row=4,column=1, pady=1)
 
+bill = Label(main_frame_bill, text="Bill", fg="gray", relief=FLAT)
+bill.config(font=("Bold",30))
+bill.grid(row=5, column=1, columnspan=3, pady=(30,0))
 
 #BILL generator
 bill_generator = Text(main_frame_bill,height=18,width=32,borderwidth=5,relief=RAISED)
 bill_generator.config(font=("Courier",15))
-bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(35,15))
+bill_generator.grid(row=6,column=0,columnspan=10,pady=(0,15))
 bill_generator.insert(1.0,"  ")
 
 
