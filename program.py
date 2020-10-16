@@ -13,16 +13,16 @@ head_label.config(font=("Bold",47))
 head_label.grid(row=0,column=0,columnspan=6,padx=22,pady=10)
 
 main_frame_items = LabelFrame(root, text="", padx=40,pady=25,borderwidth=10)
-main_frame_items.grid(row=1,column=0,columnspan=3,padx=65,pady=(30,10),sticky=W)
+main_frame_items.grid(row=1,column=0,columnspan=3,padx=74,pady=(30,10),sticky=W)
 
 main_frame_price = LabelFrame(root, text="", padx=30,pady=20,borderwidth=10)
-main_frame_price.grid(row=2,column=0,columnspan=3,padx=65,pady=30,sticky=W)
+main_frame_price.grid(row=2,column=0,columnspan=3,padx=74,pady=30,sticky=W)
 
 main_frame_bill = LabelFrame(root, text="", padx=40,pady=10,borderwidth=10)
-main_frame_bill.grid(row=1,rowspan=3,column=3,columnspan=6,padx=(30,0),pady=30,sticky=W+N)
+main_frame_bill.grid(row=1,rowspan=3,column=3,columnspan=6,padx=30,pady=30,sticky=W+N)
 
 main_frame_option = LabelFrame(root, text="", padx=30,pady=33,borderwidth=10)
-main_frame_option.grid(row=1,rowspan=3,column=5,columnspan=7,padx=(0,20),pady=30,sticky=W+N)
+main_frame_option.grid(row=1,rowspan=3,column=5,columnspan=7,padx=20,pady=30,sticky=W+N)
 
 drinks_frame = LabelFrame(main_frame_items, text="Drinks",borderwidth=5,padx=30,pady=30)
 drinks_frame.grid(row=0,column=0,columnspan=2,padx=5,pady=10)
