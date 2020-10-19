@@ -13,13 +13,13 @@ head_label.config(font=("Bold",47))
 head_label.grid(row=0,column=0,columnspan=6,padx=22,pady=10)
 
 main_frame_items = LabelFrame(root, text="", padx=40,pady=25,borderwidth=10)
-main_frame_items.grid(row=1,column=0,columnspan=3,padx=74,pady=(30,10),sticky=W)
+main_frame_items.grid(row=1,column=0,columnspan=3,padx=40,pady=20,sticky=W)
 
 main_frame_price = LabelFrame(root, text="", padx=30,pady=20,borderwidth=10)
-main_frame_price.grid(row=2,column=0,columnspan=3,padx=74,pady=30,sticky=W)
+main_frame_price.grid(row=2,column=0,columnspan=3,padx=40,pady=0,sticky=W)
 
 main_frame_bill = LabelFrame(root, text="", padx=40,pady=10,borderwidth=10)
-main_frame_bill.grid(row=1,rowspan=3,column=3,columnspan=6,padx=30,pady=30,sticky=W+N)
+main_frame_bill.grid(row=1,rowspan=3,column=3,columnspan=6,padx=(40,30),pady=30,sticky=W+N)
 
 main_frame_option = LabelFrame(root, text="", padx=30,pady=33,borderwidth=10)
 main_frame_option.grid(row=1,rowspan=3,column=5,columnspan=7,padx=20,pady=30,sticky=W+N)
@@ -145,9 +145,9 @@ total_cost.config(font=("Bold", 15))
 cost_drink.grid(row=0,column=0,padx=20,pady=15)
 cost_food.grid(row=1,column=0,padx=20,pady=15)
 service_charge.grid(row=2,column=0,padx=20,pady=15)
-paid_tax.grid(row=0,column=2,padx=(95,20))
-sub_total.grid(row=1,column=2,padx=(95,20))
-total_cost.grid(row=2,column=2,padx=(95,20))
+paid_tax.grid(row=0,column=2,padx=(85,20))
+sub_total.grid(row=1,column=2,padx=(85,20))
+total_cost.grid(row=2,column=2,padx=(85,20))
 
 #COST Input
 cost_drink_input = Entry(main_frame_price,borderwidth=3,width=12)
@@ -164,7 +164,7 @@ paid_tax_input.config(font=8)
 sub_total_input.config(font=8)
 total_cost_input.config(font=8)
 
-cost_drink_input.grid(row=0,column=1,padx=(10,5),pady=5)
+cost_drink_input.grid(row=0,column=1,padx=5,pady=5)
 cost_food_input.grid(row=1,column=1,padx=5,pady=5)
 service_charge_input.grid(row=2,column=1,padx=5,pady=5)
 paid_tax_input.grid(row=0,column=3,padx=(5,20),pady=5)
@@ -173,7 +173,7 @@ total_cost_input.grid(row=2,column=3,padx=(5,20),pady=5)
 
 
 #CALCUATOR
-cal_input = Entry(main_frame_bill,width=38,borderwidth=5)
+cal_input = Entry(main_frame_bill,width=30,borderwidth=5)
 cal_input.config(font=1)
 cal_input.grid(row=0,column=0,columnspan=5,padx=20,pady=(10,20),sticky=W)
 
@@ -301,7 +301,7 @@ bill.config(font=("Bold",30))
 bill.grid(row=5, column=1, columnspan=3, pady=(30,0))
 
 #BILL generator
-bill_generator = Text(main_frame_bill,height=18,width=32,borderwidth=5,relief=RAISED)
+bill_generator = Text(main_frame_bill,height=16,width=32,borderwidth=5,relief=RAISED)
 bill_generator.config(font=("Courier",15))
 bill_generator.grid(row=6,column=0,columnspan=10,pady=(0,15))
 bill_generator.insert(1.0,"  ")
@@ -417,7 +417,7 @@ def total():
     
     final_str = "Bill no:xxx    Date:" + date1 +"\n\t       time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost)
 
-    bill_generator = Text(main_frame_bill,height=18,width=32,borderwidth=5,relief=RAISED)
+    bill_generator = Text(main_frame_bill,height=16,width=32,borderwidth=5,relief=RAISED)
     bill_generator.config(font=("Courier",15))
     bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(35,15))
     bill_generator.insert(1.0, final_str)
