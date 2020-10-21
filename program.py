@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 import datetime
 import time
+import sqlite3
 import smtplib
 
 
@@ -47,6 +48,28 @@ food_dict = {
         5: ["Mix Veg",50]
 }
 
+#Connect to a database
+con = sqlite3.connect('example.db')
+cur = con.cursor()
+
+#Uncomment the follwing command whe you first run this program.
+#Comment it next time you run the program.
+'''
+#Create a table
+cur.execute("""CREATE TABLE test (
+    date text,
+    time text,
+    bill_no integer,
+    drinks text,
+    food text,
+    drink_cost real,
+    food_cost real,
+    sub_total real,
+    total real
+) """)
+
+con.commit()
+'''
 
 #DRINKS check box
 drink_check_1 = Label(drinks_frame,text="Lassi", pady=5,width=15,bg="lightblue")
@@ -308,7 +331,8 @@ bill_generator.insert(1.0,"  ")
 
 
 
-#TOTAL FUNCTION
+# ---------- TOTAL FUNCTION -----------
+
 def total():
     cost_drink_input.delete(0, END)
     cost_food_input.delete(0, END)
@@ -318,16 +342,58 @@ def total():
     total_cost_input.delete(0, END)
 
     global bill_generator
+    global drink_final_ar
+    global food_final_ar
+    global drink_cost
+    global food_cost
     global final_str
+    global sub_total
+    global total_cost
+    global date1
+    global time1
+    global bill_num
 
     drink_amount = 0
     food_amount = 0  
+    bill_num = 0
 
     drink_a = drinks_input_1.get()
     drink_b = drinks_input_2.get()
     drink_c = drinks_input_3.get()
     drink_d = drinks_input_4.get()
     drink_e = drinks_input_5.get()
+
+    food_a = food_input_1.get()
+    food_b = food_input_2.get()
+    food_c = food_input_3.get()
+    food_d = food_input_4.get()
+    food_e = food_input_5.get()
+
+    #TO get the current date
+    date = datetime.date.today()
+    date1 = str(date)
+    
+    #To get current time
+    t = time.localtime()   
+    time1 = str(t[3])+':'+str(t[4])+':'+str(t[5])
+
+    #Connecting to the database to increment the Bill No.
+    #Here Bill No. will be incremented automatically and 
+    #Bill No. starts count from 1 the next day(i.e at 12AM)
+    con = sqlite3.connect('example.db')
+    cur = con.cursor()
+
+    cur.execute("SELECT * FROM test")
+    b = cur.fetchall()
+
+    if (len(b) == 0):
+        bill_num = 1
+
+    elif (date1 != b[(len(b)-1)][0]):
+        bill_num = 1
+
+    else:
+        bill_num = b[(len(b)-1)][2] + 1
     
 
     #All drink items
@@ -341,12 +407,6 @@ def total():
         #Cost of drink items
         drink_amount += (drink_dict[i+1][1] * drink_ar[i])
 
-    
-    food_a = food_input_1.get()
-    food_b = food_input_2.get()
-    food_c = food_input_3.get()
-    food_d = food_input_4.get()
-    food_e = food_input_5.get()
 
     #All food items
     food_ar = [food_a, food_b, food_c, food_d, food_e]
@@ -371,11 +431,6 @@ def total():
     total_cost = drink_amount + food_amount + sc + paid_tax
     total_cost = round(total_cost, 2)
 
-    date = datetime.date.today()
-    date1 = str(date)
-    t = time.localtime()
-    time1 = str(t[3])+':'+str(t[4])+':'+str(t[5])
-
     drink_final_ar = []
     food_final_ar = [] 
     drink_cost = []
@@ -388,7 +443,6 @@ def total():
     for i in range(len(drink_ar)):
         if drink_ar[i] > 0:
             drink_final_ar.append(drink_dict[i+1][0])
-
     
     #All Selected Drink items COST
     for i in range(len(drink_ar)):
@@ -415,11 +469,11 @@ def total():
     for i in range(len(food_cost)):
         food += '\n   {}\t\t    {}'.format(food_final_ar[i], food_cost[i])
     
-    final_str = "Bill no:xxx    Date:" + date1 +"\n\t       time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost)
+    final_str = "Bill no:"+ str(bill_num) + "    Date:" + date1 +"\n\t       time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost)
 
     bill_generator = Text(main_frame_bill,height=16,width=32,borderwidth=5,relief=RAISED)
     bill_generator.config(font=("Courier",15))
-    bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(35,15))
+    bill_generator.grid(row=5,rowspan=8,column=0,columnspan=10,pady=(81,15))
     bill_generator.insert(1.0, final_str)
 
 
@@ -430,8 +484,49 @@ def total():
     sub_total_input.insert(0, sub_total)
     total_cost_input.insert(0, total_cost)
 
+# ---------- TOTAL FUNCTION END -----------
 
 
+
+# ---------- SAVE FUNCTION ------------
+
+def save():
+
+    con = sqlite3.connect('example.db')
+    cur = con.cursor()
+
+    d_cost = 0
+    f_cost = 0
+
+    d_items = ', '.join(drink_final_ar)
+
+    f_items = ', '.join(food_final_ar)
+    
+    #TOtal cost of drinks
+    for i in range(len(drink_cost)):
+        d_cost+=drink_cost[i]
+
+    #TOtal cost of food
+    for i in range(len(food_cost)):
+        f_cost+=food_cost[i]
+
+    #Create an array of the values to insert into the database
+    entry = [date1, time1, bill_num, d_items, f_items, d_cost, f_cost, sub_total, total_cost]
+
+    #Insert into the databasse
+    cur.execute("INSERT INTO test VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", entry)
+    con.commit()
+
+    #Pop-up to inform that the mesage has been inserted
+    messagebox.showinfo("DATABASE", "Bill saved into the database")
+
+# ---------- SAVE FUNCTION END ------------
+
+
+
+# ----------- SEND FUNCTION --------------
+
+#MAIL function
 def mail():
     rcv = mail_input.get()
     bill = bill_generator.get('1.0', END)
@@ -451,7 +546,7 @@ def mail():
 
     messagebox.showinfo("Message Sent", "Message Sent Successfully")
 
-#SEND FUNCTION
+#SEND function
 def send():
     new = Tk()
 
@@ -491,9 +586,11 @@ def send():
  
     new.mainloop()
 
+# ----------- SEND FUNCTION END --------------
 
 
-#RESET FUNCTION
+
+# -------------- RESET FUNCTION ---------------
 def reset():
     cost_drink_input.delete(0, END)
     cost_food_input.delete(0, END)
@@ -516,29 +613,206 @@ def reset():
 
     bill_generator.delete(1.0, END)
 
+# -------------- RESET FUNCTION END ---------------
+
+
+
+# --------------- SHOW_INFO FUNCTION ----------------
+
+def delete_item():
+    item = int(del_input.get())
+
+    con = sqlite3.connect('example.db')
+    cur = con.cursor()
+
+    cur.execute("SELECT rowid,* FROM test")
+    a = cur.fetchall()
+
+    for i in range(len(a)):
+        if item == a[i][0]:
+            cur.execute(f"DELETE from test WHERE rowid= {item}")
+            con.commit()
+            break
+    else:
+        messagebox.showwarning("WARNING", "Item not in Database")
+
+
+def delete_func():
+    con = sqlite3.connect('example.db')
+    cur = con.cursor()
+
+    cur.execute("DELETE from test")
+
+    con.commit()
+
+
+def show_data():
+    
+    new = Tk()
+    new.state('zoomed')
+
+    global del_input
+
+    frame_info = LabelFrame(new, borderwidth=5, padx=20, pady=20)
+    frame_info.grid(row=0, column=0, columnspan=8, padx=5, pady=20, sticky=N)
+
+    frame_op = LabelFrame(new, text="Delete Item", borderwidth=5, padx=15, pady=15)
+    frame_op.grid(row=0, column=8, columnspan=10, padx=5, pady=20)
+
+    frame_del_all = LabelFrame(new, text="Delete All", borderwidth=5, padx=15, pady=15)
+    frame_del_all.grid(row=1, column=8, columnspan=10, padx=5, pady=20)
+
+    con = sqlite3.connect('example.db')
+    cur = con.cursor()
+
+    cur.execute("SELECT rowid,* FROM test")
+    a = cur.fetchall()
+
+    header = ["Index", "Date", "Time", "Bill No.", "Drinks", "Food", "D.Cost", "F.Cost", "Sub Total", "Total"]
+
+    for j in range(len(header)):
+        if j == 0:
+            e = Entry(frame_info, width=7, borderwidth=2, bg="lightblue", font=('Arial', 16, 'bold'))
+            e.grid(row=0, column=j)
+            e.insert(END, header[j])
+
+        elif j in [1,2]:
+            e = Entry(frame_info, width=10, borderwidth=2, bg="lightblue", font=('Arial', 16, 'bold'))
+            e.grid(row=0, column=j)
+            e.insert(END, header[j])
+
+        elif j == 3:
+            e = Entry(frame_info, width=7, borderwidth=2, bg="lightblue", font=('Arial', 16, 'bold'))
+            e.grid(row=0, column=j)
+            e.insert(END, header[j])
+
+        elif j in [4,5]:
+            e = Entry(frame_info, width=33, borderwidth=2, bg="lightblue", font=('Arial', 16, 'bold'))
+            e.grid(row=0, column=j)
+            e.insert(END, header[j])
+
+        elif j  in [6,7,8,9]:
+            e = Entry(frame_info, width=8, borderwidth=2, bg="lightblue", font=('Arial', 16, 'bold'))
+            e.grid(row=0, column=j)
+            e.insert(END, header[j])
+
+
+    for i in range(len(a)):
+        for j in range(len(a[0])):
+            if j == 0:
+                e = Entry(frame_info, width=7, borderwidth=2, font=('Arial', 16, 'bold'))
+                e.grid(row=i+1, column=j)
+                e.insert(END, a[i][j])
+
+            elif j in [1,2]:
+                e = Entry(frame_info, width=10, font=('Arial', 16, 'bold'))
+                e.grid(row=i+1, column=j)
+                e.insert(END, a[i][j])
+
+            elif j == 3:
+                e = Entry(frame_info, width=7, font=('Arial', 16, 'bold'))
+                e.grid(row=i+1, column=j)
+                e.insert(END, a[i][j])
+
+            elif j in [4,5]:
+                e = Entry(frame_info, width=33, font=('Arial', 16, 'bold'))
+                e.grid(row=i+1, column=j)
+                e.insert(END, a[i][j])
+
+            elif j  in [6,7,8,9]:
+                e = Entry(frame_info, width=8, font=('Arial', 16, 'bold'))
+                e.grid(row=i+1, column=j)
+                e.insert(END, a[i][j])
+
+    del_label = Label(frame_op, text="Enter Index:", width=10, padx=5, pady=5)
+    del_label.config(font=("Arial", 15))
+    del_label.grid(row=0, column=0, padx=10, pady=(10,0))
+
+    del_input = Entry(frame_op, width=10)
+    del_input.config(font=("Arial", 15))
+    del_input.grid(row=1, column=0, padx=10, pady=(0,10))
+
+    delete_all = Button(frame_op, text="Delete", padx=24, pady=10, bg="violet", fg="white", relief=RAISED, command= delete_item)
+    delete_all.config(font=("Arial", 16))
+    delete_all.grid(row=2, column=0, padx=20, pady=10)
+
+    delete_all = Button(frame_del_all, text="Delete All", padx=10, pady=10, bg="violet", fg="white", relief=RAISED, command= delete_func)
+    delete_all.config(font=("Arial", 16))
+    delete_all.grid(row=0, column=0, padx=20, pady=10)
+
+# --------------- SHOW_INFO FUNCTION END ----------------
+
+
+
+# --------------- LOGIN FUNCTION -------------------
+
+def login():
+    log = Tk()
+    log.geometry('400x200')
+
+    frame = LabelFrame(log, text="Frame...", borderwidth=4, padx=10,pady=10)
+    frame.grid(row=0, column=1, columnspan=2, padx=75,pady=20)
+
+    user_dict = {
+        "username" : "admin",
+        "password" : "password"
+    }
+
+    user_label = Label(frame, text="Username", padx=20, pady=10)
+    pwd_label = Label(frame, text="Password", padx=20, pady=10)
+
+    user_label.grid(row=0, column=0)
+    pwd_label.grid(row=1, column=0)
+
+    user_input = Entry(frame, borderwidth=2)
+    pwd_input = Entry(frame, borderwidth=2)
+
+    user_input.grid(row=0, column=1)
+    pwd_input.grid(row=1, column=1)
+
+    def check():
+        user = user_input.get()
+        password = pwd_input.get()
+
+        if user == user_dict["username"] and password == user_dict["password"]:
+            show_data()
+        else:
+            messagebox.showerror("INFO","Wrong username or password")
+
+
+    button = Button(frame,text="Submit", padx=10, pady=10, width=15, command=check)
+    button.grid(row=2, column=0,columnspan=2,padx=20,sticky=W+E)
+
+
+    log.mainloop()
+
+# --------------- LOGIN FUNCTION END -------------------
 
 
 #BUTTONS
 total_button = Button(main_frame_option,text="Total",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=total)
-save_button = Button(main_frame_option,text="Save",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
+save_button = Button(main_frame_option,text="Save",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=save)
 send_button = Button(main_frame_option,text="Send",padx=32,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=send)
 exit_button = Button(main_frame_option,text="Exit",padx=41,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=root.quit)
 update_button = Button(main_frame_option,text="Update",padx=21,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED)
 reset_button = Button(main_frame_option,text="Reset",padx=29,pady=9,fg="white",background="violet",borderwidth=2,relief=RAISED,command=reset)
+login_button = Button(main_frame_option,text="Login",padx=32,pady=9,fg="white",background="#3C40C6",borderwidth=2,relief=RAISED, command=login)
 
-total_button.config(font=("Helvetica", 20))
+total_button.config(font=("Bold", 20))
 save_button.config(font=("Bold", 20))
 send_button.config(font=("Bold", 20))
 exit_button.config(font=("Bold", 20))
 update_button.config(font=("Bold", 20))
 reset_button.config(font=("Bold", 20))
+login_button.config(font=("Bold", 20))
 
-total_button.grid(row=0,column=0,columnspan=2,padx=10,pady=(40,20))
-save_button.grid(row=1,column=0,columnspan=2,padx=10,pady=20) 
-send_button.grid(row=2,column=0,columnspan=2,padx=10,pady=20)
-exit_button.grid(row=3,column=0,columnspan=2,padx=10,pady=20)
-update_button.grid(row=4,column=0,columnspan=2,padx=10,pady=20)
-reset_button.grid(row=5,column=0,columnspan=2,padx=10,pady=(20,40))
+total_button.grid(row=0,column=0,columnspan=2,padx=10,pady=(0,19))
+save_button.grid(row=1,column=0,columnspan=2,padx=10,pady=19) 
+send_button.grid(row=2,column=0,columnspan=2,padx=10,pady=19)
+exit_button.grid(row=3,column=0,columnspan=2,padx=10,pady=19)
+update_button.grid(row=4,column=0,columnspan=2,padx=10,pady=19)
+reset_button.grid(row=5,column=0,columnspan=2,padx=10,pady=19)
+login_button.grid(row=6,column=0,columnspan=2,padx=10,pady=(19,0))
 
 
 root.mainloop()

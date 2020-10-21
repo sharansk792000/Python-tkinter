@@ -14,9 +14,10 @@ Calculates the total amount of the items ordered and generates a bill.
 
 Send the bill to the customer. ( to make this work follow the steps given below in the Instructions )
 
+Save the bill in a database. ( Using sqlite3 database )
+
 #
 ## Yet to be done :
-Save the bill in a database.
 
 Update the items available in the restaurant.
 
