@@ -1,6 +1,6 @@
 # Python-tkinter project 
 ## Database Management System ✨
-#
+
 ### This python project is a restaurant management system which can the following :
 
 1. Calculate the total amount of the items ordered and generate a bill 🧾.
