@@ -591,6 +591,7 @@ def send():
 
 
 # -------------- RESET FUNCTION ---------------
+
 def reset():
     cost_drink_input.delete(0, END)
     cost_food_input.delete(0, END)
@@ -617,7 +618,7 @@ def reset():
 
 
 
-# --------------- SHOW_INFO FUNCTION ----------------
+# --------------- SHOW_DATA FUNCTION ----------------
 
 def delete_item():
     item = int(del_input.get())
@@ -646,12 +647,45 @@ def delete_func():
     con.commit()
 
 
+def update_gen(val):
+    index_check = int(update_input.get())
+
+    con = sqlite3.connect('example.db')
+    cur = con.cursor()
+
+    if val == 3:
+        replace = int(replace_input.get())
+        cur.execute(f"UPDATE test SET bill_no = {replace} WHERE rowid= {index_check}")
+        con.commit()
+
+    elif val == 6:
+        replace = float(replace_input.get())
+        cur.execute(f"UPDATE test SET drink_cost = {replace} WHERE rowid= {index_check}")
+        con.commit()
+
+    elif val == 7:
+        replace = float(replace_input.get())
+        cur.execute(f"UPDATE test SET food_cost = {replace} WHERE rowid= {index_check}")
+        con.commit()
+
+    elif val == 8:
+        replace = float(replace_input.get())
+        cur.execute(f"UPDATE test SET sub_total = {replace} WHERE rowid= {index_check}")
+        con.commit()
+
+    elif val == 9:
+        replace = float(replace_input.get())
+        cur.execute(f"UPDATE test SET total = {replace} WHERE rowid= {index_check}")
+        con.commit()
+
+
 def show_data():
     
     new = Tk()
     new.state('zoomed')
 
     global del_input
+    global update_input
 
     frame_info = LabelFrame(new, borderwidth=5, padx=20, pady=20)
     frame_info.grid(row=0, column=0, columnspan=8, padx=5, pady=20, sticky=N)
@@ -661,6 +695,9 @@ def show_data():
 
     frame_del_all = LabelFrame(new, text="Delete All", borderwidth=5, padx=15, pady=15)
     frame_del_all.grid(row=1, column=8, columnspan=10, padx=5, pady=20)
+
+    frame_update = LabelFrame(new, text="Update Item", borderwidth=5, padx=15, pady=10)
+    frame_update.grid(row=2, column=8, columnspan=10, padx=5, pady=10)
 
     con = sqlite3.connect('example.db')
     cur = con.cursor()
@@ -724,6 +761,7 @@ def show_data():
                 e.grid(row=i+1, column=j)
                 e.insert(END, a[i][j])
 
+    #Delete option
     del_label = Label(frame_op, text="Enter Index:", width=10, padx=5, pady=5)
     del_label.config(font=("Arial", 15))
     del_label.grid(row=0, column=0, padx=10, pady=(10,0))
@@ -732,6 +770,7 @@ def show_data():
     del_input.config(font=("Arial", 15))
     del_input.grid(row=1, column=0, padx=10, pady=(0,10))
 
+    #Delete All option
     delete_all = Button(frame_op, text="Delete", padx=24, pady=10, bg="violet", fg="white", relief=RAISED, command= delete_item)
     delete_all.config(font=("Arial", 16))
     delete_all.grid(row=2, column=0, padx=20, pady=10)
@@ -740,7 +779,51 @@ def show_data():
     delete_all.config(font=("Arial", 16))
     delete_all.grid(row=0, column=0, padx=20, pady=10)
 
-# --------------- SHOW_INFO FUNCTION END ----------------
+    #Update option
+    update_label = Label(frame_update, text="Enter Index:")
+    update_label.config(font=("Arial", 15))
+    update_label.grid(row=0, column=0, padx=10, pady=(10,0))
+
+    update_input = Entry(frame_update, width=10)
+    update_input.config(font=("Arial", 15))
+    update_input.grid(row=1, column=0, padx=10, pady=(0,10))
+
+    choice = StringVar()
+    
+    def update_func(val):
+        global value
+        global replace_input
+        value = val
+
+        check = update_input.get()
+        if check == '':
+            messagebox.showerror("ERROR", "Enter an index")
+        row_val = int(update_input.get()) - 1
+
+        insert_val = a[row_val][value]
+        replace_label = Label(frame_update, text="Replacement:")
+        replace_label.config(font=("Arial", 15))
+        replace_label.grid(row=9, column=0, padx=10, pady=(10,0))
+
+        replace_input = Entry(frame_update, width=10)
+        replace_input.config(font=("Arial", 15))
+        replace_input.grid(row=10, column=0, padx=10, pady=(0,10))
+        replace_input.insert(0, insert_val)
+
+        update_db = Button(frame_update, text="Update", padx=22, pady=10, bg="violet", fg="white", relief=RAISED, command= lambda: update_gen(val))
+        update_db.config(font=("Arial", 16))
+        update_db.grid(row=11, column=0, padx=20, pady=10)
+
+    Radiobutton(frame_update, text='Bill No.', variable=choice, value=3, font=("Arial", 12, "bold"), command= lambda: update_func(3)).grid(row=4, column=0, padx=10, pady=0, sticky=W)
+    Radiobutton(frame_update, text='Drink Cost', variable=choice, value=6, font=("Arial", 12, "bold"), command= lambda: update_func(6)).grid(row=5, column=0, padx=10, pady=0, sticky=W)
+    Radiobutton(frame_update, text='Food Cost', variable=choice, value=7, font=("Arial", 12, "bold"), command= lambda: update_func(7)).grid(row=6, column=0, padx=10, pady=0, sticky=W)
+    Radiobutton(frame_update, text='Sub Total', variable=choice, value=8, font=("Arial", 12, "bold"), command= lambda: update_func(8)).grid(row=7, column=0, padx=10, pady=0, sticky=W)
+    Radiobutton(frame_update, text='Total', variable=choice, value=9, font=("Arial", 12, "bold"), command= lambda: update_func(9)).grid(row=8, column=0, padx=10, pady=0, sticky=W)
+
+
+    new.mainloop()
+
+# --------------- SHOW_DATA FUNCTION END ----------------
 
 
 
