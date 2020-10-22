@@ -24,11 +24,11 @@ Update the items available in the restaurant.
 
 #
 ## Access the database :
-Default ```username``` and ```password``` is ```admin``` and ```password```.
+Default  ```username```  and  ```password```  is  ```admin``` and  ```password```.
 
-To change ```username``` and ```password```, go to the ```login()``` function and in the ```user_dict``` change username and password.
+To change  ```username```  and  ```password``` , go to the  ```login()```  function and in the  ```user_dict```  change username and password.
 
-Then run the program and enter ```username``` and ```password``` that you have set when prompted.
+Then run the program and enter  ```username```  and  ```password```  that you have set when prompted.
 
 #
 ## Instructions to send the bill using Mail :
@@ -42,6 +42,6 @@ Open a new tab and search "Less secure apps"
 Click on the first link and ENABLE "Less secure apps".
 
 ### Step 3:
-In the code go to ```mail()``` function and enter your email ID and Password.
+In the code go to  ```mail()```  function and enter your email ID and Password.
 
 Now you are good to go...!🙌
