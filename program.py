@@ -43,7 +43,7 @@ drink_dict = {
 food_dict = {
         1: ["Roti",10],
         2: ["Dal Makhni",60],
-        3: ["Mutter Paneer",80],
+        3: ["Chicken Tikka",80],
         4: ["Paratha",12],
         5: ["Mix Veg",50]
 }
@@ -113,7 +113,7 @@ drinks_input_5.grid(row=4,column=1,sticky=E)
 #FOOD label
 food_check_1 = Label(food_frame,text="Roti", pady=5,width=15,bg="lightblue")
 food_check_2 = Label(food_frame,text="Dal Makhni", pady=5,width=15,bg="lightblue")
-food_check_3 = Label(food_frame,text="Mutter Paneer", pady=5,width=15,bg="lightblue")
+food_check_3 = Label(food_frame,text="Chicken Tikka", pady=5,width=15,bg="lightblue")
 food_check_4 = Label(food_frame,text="Paratha", pady=5,width=15,bg="lightblue")
 food_check_5 = Label(food_frame,text="Mix Veg", pady=5,width=15,bg="lightblue")
 
@@ -432,7 +432,9 @@ def total():
     total_cost = round(total_cost, 2)
 
     drink_final_ar = []
-    food_final_ar = [] 
+    food_final_ar = []
+    drink_count = []
+    food_count = [] 
     drink_cost = []
     food_cost = []
     drink = ''
@@ -443,6 +445,7 @@ def total():
     for i in range(len(drink_ar)):
         if drink_ar[i] > 0:
             drink_final_ar.append(drink_dict[i+1][0])
+            drink_count.append(drink_ar[i])
     
     #All Selected Drink items COST
     for i in range(len(drink_ar)):
@@ -451,7 +454,7 @@ def total():
     
     #Final DRINK Array
     for i in range(len(drink_cost)):
-        drink += '\n   {}\t\t    {}'.format(drink_final_ar[i], drink_cost[i])
+        drink += f'\n   {drink_final_ar[i]} ({drink_count[i]})\t\t    {drink_cost[i]}'
     
    
     #for food
@@ -459,6 +462,7 @@ def total():
     for i in range(len(food_ar)):
         if food_ar[i] > 0:
             food_final_ar.append(food_dict[i+1][0])
+            food_count.append(food_ar[i])
     
     #All Selected Food item COST
     for i in range(len(food_ar)):
@@ -467,7 +471,7 @@ def total():
     
     #Final FOOD Array
     for i in range(len(food_cost)):
-        food += '\n   {}\t\t    {}'.format(food_final_ar[i], food_cost[i])
+        food += f'\n   {food_final_ar[i]} ({food_count[i]})\t\t    {food_cost[i]}'
     
     final_str = "Bill no:"+ str(bill_num) + "    Date:" + date1 +"\n\t       time: " + time1 +"\n   ========================\n   Item(s)\t\t   Amount\n   ========================\n   " + drink + "\n   " + food + "\n\n   ----------------------\n   " + "Sub Total\t\t   "+ str(sub_total) + "\n   " + "Total\t\t   " + str(total_cost)
 
@@ -798,21 +802,28 @@ def show_data():
         check = update_input.get()
         if check == '':
             messagebox.showerror("ERROR", "Enter an index")
-        row_val = int(update_input.get()) - 1
+        else:
+            row_val = int(update_input.get()) - 1
 
-        insert_val = a[row_val][value]
-        replace_label = Label(frame_update, text="Replacement:")
-        replace_label.config(font=("Arial", 15))
-        replace_label.grid(row=9, column=0, padx=10, pady=(10,0))
+        if len(a) == 0:
+            messagebox.showerror("ERROR", "Database is Empty")
 
-        replace_input = Entry(frame_update, width=10)
-        replace_input.config(font=("Arial", 15))
-        replace_input.grid(row=10, column=0, padx=10, pady=(0,10))
-        replace_input.insert(0, insert_val)
+        elif row_val > a[len(a)-1][0]:
+            messagebox.showerror("ERROR", "Index out of range")
+        else:
+            insert_val = a[row_val][value]
+            replace_label = Label(frame_update, text="Replacement:")
+            replace_label.config(font=("Arial", 15))
+            replace_label.grid(row=9, column=0, padx=10, pady=(10,0))
 
-        update_db = Button(frame_update, text="Update", padx=22, pady=10, bg="violet", fg="white", relief=RAISED, command= lambda: update_gen(val))
-        update_db.config(font=("Arial", 16))
-        update_db.grid(row=11, column=0, padx=20, pady=10)
+            replace_input = Entry(frame_update, width=10)
+            replace_input.config(font=("Arial", 15))
+            replace_input.grid(row=10, column=0, padx=10, pady=(0,10))
+            replace_input.insert(0, insert_val)
+
+            update_db = Button(frame_update, text="Update", padx=22, pady=10, bg="violet", fg="white", relief=RAISED, command= lambda: update_gen(val))
+            update_db.config(font=("Arial", 16))
+            update_db.grid(row=11, column=0, padx=20, pady=10)
 
     Radiobutton(frame_update, text='Bill No.', variable=choice, value=3, font=("Arial", 12, "bold"), command= lambda: update_func(3)).grid(row=4, column=0, padx=10, pady=0, sticky=W)
     Radiobutton(frame_update, text='Drink Cost', variable=choice, value=6, font=("Arial", 12, "bold"), command= lambda: update_func(6)).grid(row=5, column=0, padx=10, pady=0, sticky=W)
